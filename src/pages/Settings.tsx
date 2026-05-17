@@ -48,7 +48,7 @@ const Settings = () => {
             upleb
           </a>
           {(() => {
-            const SUBS = ['blst','fx','glmps','npub','pls','smpl','trth'] as const;
+            const SUBS = ['blst','glmps','npub','pls','smpl'] as const;
             const cur = SUBS.find((s) => window.location.hostname === `${s}.upleb.uk`);
             return <>
               {cur && <span className="font-mono text-[10px] sm:text-[11px] text-primary whitespace-nowrap shrink-0 cursor-default">{cur}</span>}
