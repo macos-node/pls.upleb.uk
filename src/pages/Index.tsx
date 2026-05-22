@@ -717,10 +717,10 @@ export default function Index() {
         {/* Header — hero card (title + subtitle + streaming relays + Shaka) */}
         <div>
           <div className="bg-card border border-border px-4 py-3 mb-4 min-h-[110px] flex items-start gap-4 flex-wrap">
-            <div className="flex-1 min-w-0 space-y-1">
-              <AnimatedTitle accent="pls" rest="" from="#FF7849" to="#FFB347" suffixRgba="rgba(255,120,73,0.2)" fontSize="clamp(28px, 5vw, 40px)" />
-              <div className="flex items-center gap-2 text-[10px] font-mono">
-                <span className="text-muted-foreground/70 truncate">Nostr relay statistics</span>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-start gap-1.5">
+                <AnimatedTitle accent="pls" rest="" from="#FF7849" to="#FFB347" suffixRgba="rgba(255,120,73,0.2)" fontSize="clamp(28px, 5vw, 40px)" />
+                <span className="mt-2.5 inline-block rounded-full border border-accent text-accent font-mono text-[10px] px-2 py-0.5 shrink-0">stats</span>
               </div>
             </div>
             <div className="w-full sm:w-[24rem] shrink-0">
