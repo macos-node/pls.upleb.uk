@@ -122,7 +122,7 @@ function useUserProfile(pubkey: string | null) {
   useEffect(() => {
     if (!pubkey) { setProfile(null); return; }
     setProfile(null);
-    const relays = ['wss://relay.fizx.uk', 'wss://nos.lol'];
+    const relays = ['wss://relay.nfunc.xyz', 'wss://nos.lol'];
     const sockets: WebSocket[] = [];
     let latestTs = 0;
     relays.forEach(url => {
@@ -346,13 +346,21 @@ function RelayColumn({ url }: { url: string }) {
 // The secondary badge is a fixed compact view of our own relay (git.upleb.uk),
 // which intentionally supports a narrow set of NIPs (1, 11, 34, 77) — see
 // project CLAUDE.md "git.upleb.uk (ngit-grasp ...)" for context.
+// Relays that no longer exist. The fizx box was decommissioned on 2026-11-04 and
+// every *.fizx.uk name is NXDOMAIN, so a visitor who chose it before then has a
+// dead host saved. Drop it on read instead of leaving them on a relay that
+// cannot resolve.
+const RETIRED_RELAYS = ['wss://relay.fizx.uk'];
 const PRIMARY_RELAY_KEY = 'pulse_primary_relay';
-const PRIMARY_RELAY_DEFAULT = 'wss://relay.fizx.uk';
+const PRIMARY_RELAY_DEFAULT = 'wss://relay.nfunc.xyz';
 const PAGE_RELAY = 'wss://git.upleb.uk';
 
 function PrimaryRelayCard({ extras }: { extras?: React.ReactNode }) {
   const [url, setUrl] = useState<string>(() => {
-    try { return localStorage.getItem(PRIMARY_RELAY_KEY) ?? PRIMARY_RELAY_DEFAULT; } catch { return PRIMARY_RELAY_DEFAULT; }
+    try {
+      const saved = localStorage.getItem(PRIMARY_RELAY_KEY);
+      return saved && !RETIRED_RELAYS.includes(saved) ? saved : PRIMARY_RELAY_DEFAULT;
+    } catch { return PRIMARY_RELAY_DEFAULT; }
   });
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(url);
@@ -470,7 +478,7 @@ function RelayBadge({ url = PAGE_RELAY, bare = false }: { url?: string; bare?: b
 }
 
 function RelayNip05Card() {
-  const { data, isLoading, isError } = useRelayNip05('wss://relay.fizx.uk');
+  const { data, isLoading, isError } = useRelayNip05('wss://relay.nfunc.xyz');
   const verified = data && data.verifiedNames.length > 0;
 
   return (

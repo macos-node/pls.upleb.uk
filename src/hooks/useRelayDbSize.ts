@@ -21,7 +21,7 @@ export function useRelayStats() {
   const query = useQuery<RelayStats>({
     queryKey: QUERY_KEY,
     queryFn: async () => {
-      const res = await fetch('https://relay.fizx.uk/relay-stats.json');
+      const res = await fetch('https://relay.nfunc.xyz/relay-stats.json');
       if (!res.ok) throw new Error('failed');
       return res.json();
     },
